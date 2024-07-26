@@ -1,0 +1,26 @@
+{% extends 'main.html'%}
+
+{%block content%}
+<h1>This is the {{page}} page</h1>
+<h2>Model of the car</h2>
+
+{% if model > 2009 %}
+<p>Car model year is greater than 2009</p>
+
+{% elif model == 2009 %}
+<P>Car model year is exactly 2009</P>
+
+{%else%}
+<p>Car model year is less than 2009</p>
+{%endif%}
+
+<hr>
+<h1>Car Detials</h1>
+
+<ul>
+    {%for detail in carDetails%}
+    <li>Company:{{detail.Company}} -- <a href="{% url 'detail' detail.id%}">Model:{{detail.Model}}</a> -- Year:{{detail.year}} -- Description:{{detail.Description}}.</li>
+    {%endfor%}
+</ul>
+ <hr>
+{%endblock content%}                                                                                                            
