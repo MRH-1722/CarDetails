@@ -1,7 +1,11 @@
 {% extends 'main.html'%}
 
 {%block content%}
-<h2>{{detail.Model}}</h2>
-<p>{{detail.Description}}</p>
+<h2>{{detail.model}}</h2>
+<p>{{detail.description}}</p>
+<hr>
+{% for variant in variant%}
+<span style="border:1px solid red">{{variant}}</span>
+{%endfor%}
 <hr>
 {%endblock content%}

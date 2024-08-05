@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import Detail
 
 carDetailList = [
     { 
@@ -26,14 +27,10 @@ carDetailList = [
 ]
 
 def details(request):
-    page = 'Car details '
-    model = 2003
-    context = {'page': page , 'model' : model , 'carDetails' : carDetailList}
-    return render(request , 'details.html' , context )
+    allDetails = Detail.objects.all()
+    return render(request , 'details.html' , {'allDetails' : allDetails} )
 
 def detail(request, pk): 
-    detailObj = None
-    for i in carDetailList:
-        if i['id'] == pk:
-            detailObj = i
-    return render(request, 'detail.html' , {'detail' : detailObj})
+    detailObj = Detail.objects.get(uuid=pk)
+    variant = Detail.objects.all()
+    return render(request, 'detail.html' , {'detail' : detailObj , 'variant':variant})
