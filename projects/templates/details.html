@@ -5,20 +5,25 @@
 
 <table>
     <tr style="color: rgb(102, 163, 11);">
-        <th>ID</th>
         <th>Company</th>
         <th>Model</th>
         <th>Year</th>
         <th>Description</th>
+        <th>View</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        
     </tr>
     {% for detail in allDetails%}
     <tr>
-        <td>{{detail.uuid}}</td>
         <td>{{detail.company}}</td>
         <td>{{detail.model}}</td>
         <td>{{detail.year}}</td>
         <td>{{detail.description}}</td>
         <td><a href="{% url 'detail' detail.uuid %}">View</a></td>
+        <td><a href="{% url 'update-detail' detail.uuid %}">Edit</a></td>
+        <td><a href="{% url 'delete-detail' detail.uuid%}">Delete</a></td>
+        
     </tr>
     {%endfor%}
 </table>
