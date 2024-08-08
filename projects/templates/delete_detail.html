@@ -2,10 +2,11 @@
 {%block content%}
 
 <h1>Delete-Detail page</h1>
-<p>Are you sure to delete the "{{detail}}" vehicle detail?</p>
+
 <form action="" method="POST">
+    <p>Are you sure to delete the "{{detail}}" vehicle detail?</p>
     {% csrf_token %}
-    <button><a href="{% url 'details' %}"></a>Go Back</button>
+    <button><a href="{% url 'details' %}">Go Back</a></button>
     <input type="Submit" value="Confirm">
 </form>
 

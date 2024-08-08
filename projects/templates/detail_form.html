@@ -1,7 +1,7 @@
 {% extends 'main.html' %}
 
 {%block content%}
-<h1>Detail Form</h1>
+<h1>Detail Form | <button><a href="{% url 'details' %}">Go Back</a></button></h1>
 
 <form method="post">
     {% csrf_token %}

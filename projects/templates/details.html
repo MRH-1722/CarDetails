@@ -2,6 +2,8 @@
 
 {%block content%}
 <h1>Car Detials</h1>
+<button><a style="font-size: 8; color: green;" href="{% url 'create-detail' %}">Add Details</a></button>
+<hr>
 
 <table>
     <tr style="color: rgb(102, 163, 11);">
@@ -22,7 +24,7 @@
         <td>{{detail.description}}</td>
         <td><a href="{% url 'detail' detail.uuid %}">View</a></td>
         <td><a href="{% url 'update-detail' detail.uuid %}">Edit</a></td>
-        <td><a href="{% url 'delete-detail' detail.uuid%}">Delete</a></td>
+        <td><a href="{% url 'delete-detail' detail.uuid %}">Delete</a></td>
         
     </tr>
     {%endfor%}
