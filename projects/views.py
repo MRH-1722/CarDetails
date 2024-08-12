@@ -15,7 +15,7 @@ def detail(request, pk):
 def createDetail(request):
     form = DetailForm()
     if request.method == 'POST':
-        form = DetailForm(request.POST)
+        form = DetailForm(request.POST , request.FILES)
         if form.is_valid():
             form.save()
             return redirect('details')
@@ -26,7 +26,7 @@ def updateDetail(request, pk):
     detail = Detail.objects.get(uuid=pk)
     form = DetailForm(instance=detail)
     if request.method == 'POST':
-        form = DetailForm(request.POST, instance=detail)
+        form = DetailForm(request.POST, request.FILES, instance=detail )
         if form.is_valid():
             form.save()
             return redirect('details')
