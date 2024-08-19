@@ -13,7 +13,7 @@ def detail(request, pk):
     return render(request, 'detail.html' , {'detail' : detailObj , 'variant':variant})
 
 def createDetail(request):
-    form = DetailForm()
+    form = DetailForm(request.POST , request.FILES)
     if request.method == 'POST':
         form = DetailForm(request.POST , request.FILES)
         if form.is_valid():

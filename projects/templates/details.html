@@ -1,33 +1,6 @@
 {% extends 'main.html'%}
-
 {%block content%}
-<h1>Car Detials</h1>
-<hr>
 
-<table>
-    <tr>
-        <th>Company</th>
-        <th>Model</th>
-        <th>Year</th>
-        <th>Description</th>
-        <th>View</th>
-        <th>Edit</th>
-        <th>Delete</th>
-        
-    </tr>
-    {% for detail in allDetails%}
-    <tr>
-        <td>{{detail.company}}</td>
-        <td>{{detail.model}}</td>
-        <td>{{detail.year}}</td>
-        <td>{{detail.description}}</td>
-        <td><a href="{% url 'detail' detail.uuid %}">View</a></td>
-        <td><a href="{% url 'update-detail' detail.uuid %}">Edit</a></td>
-        <td><a href="{% url 'delete-detail' detail.uuid %}">Delete</a></td>
-        
-    </tr>
-    {%endfor%}
-</table>
 <!-- Main Section -->
 <main class="projects">
     <section class="hero-section text-center">
@@ -39,9 +12,9 @@
         <div class="hero-section__search">
           <form class="form" action="#" method="get">
             <div class="form__field">
-              <label for="formInput#search">Search By Projects </label>
+              <label for="formInput#search">Search By Car Details </label>
               <input class="input input--text" id="formInput#search" type="text" name="text"
-                placeholder="Search by Project Title" />
+                placeholder="Search by Company or model" />
             </div>
 
             <input class="btn btn--sub btn--lg" type="submit" value="Search" />
@@ -56,25 +29,21 @@
         {% for detail in allDetails%}
           <div class="column">
             <div class="card project">
-              <a href="single-project.html" class="project">
-                <img class="project__thumbnail" src="images/project-a.png" alt="project thumbnail" />
+              <a href="{% url 'detail' detail.uuid %}" class="project">
+                <img class="project__thumbnail" src="" alt="project thumbnail" />
                 <div class="card__body">
-                  <h3 class="project__title">Yoga Studio Landing Page Website and Design</h3>
-                  <p><a class="project__author" href="profile.html">By Dennis Ivanov</a></p>
+                  <h3 class="project__title">{{detail.company}}</h3>
+                  <p><a class="project__author" href="profile.html">{{detail.model}} - {{detail.year}}</a></p>
                   <p class="project--rating">
-                    <span style="font-weight: bold;">98%</span> Postitive
-                    Feedback (72 Votes)
+                    <span style="font-weight: bold;">{{detail.description}}</span>
                   </p>
                   <div class="project__tags">
+                    {% for variant in detail.variant.all %}
                     <span class="tag tag--pill tag--main">
-                      <small>NextJS</small>
+                      <small>{{variant}}</small>
                     </span>
-                    <span class="tag tag--pill tag--main">
-                      <small>GraphQL</small>
-                    </span>
-                    <span class="tag tag--pill tag--main">
-                      <small>TypeScript</small>
-                    </span>
+                    {%endfor%}
+                    
                   </div>
                 </div>
               </a>
