@@ -1,7 +1,23 @@
-from django import forms
+from django.forms import ModelForm, widgets
 from .models import Detail
+from django import forms
 
-class DetailForm(forms.ModelForm):
+class DetailForm(ModelForm):
     class Meta:
         model = Detail
-        fields = '__all__' 
+        fields = ['company', 'model' ,'year' , 'description' , 'image' , 'variant'] 
+
+        widgets = {
+            'variant' : forms.CheckboxSelectMultiple(),
+        }
+    
+    def __init__(self, *args, **kwargs):
+        super(DetailForm, self).__init__(*args , **kwargs)
+
+        # instead of doing the input fields manaually, we do in for loop
+
+        # self.fields['company'].widget.attrs.update({'class':'input' , 'placeholder': 'Enter Text'})
+        # self.fields['model'].widget.attrs.update({'class':'input' , 'placeholder': 'Enter Text'})
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class':'input' , 'placeholder': 'Enter Text'})

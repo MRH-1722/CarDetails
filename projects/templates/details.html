@@ -1,6 +1,20 @@
 {% extends 'main.html'%}
 {%block content%}
 
+<style>
+  .card_project {
+    overflow: hidden; /* Ensures that children elements stay inside */
+    position: relative; /* Helps with positioning elements inside */
+    border: 0cap;
+}
+.project__thumbnail {
+    max-width: 100%; /* Ensure the image fits within the container */
+    height: auto;
+    display: block; /* Prevents the image from being treated as an inline element */
+}
+
+</style>
+
 <!-- Main Section -->
 <main class="projects">
     <section class="hero-section text-center">
@@ -25,35 +39,40 @@
     <!-- Search Result: DevList -->
     <section class="projectsList">
       <div class="container">
-        <div class="grid grid--three">
-        {% for detail in allDetails%}
-          <div class="column">
-            <div class="card project">
-              <a href="{% url 'detail' detail.uuid %}" class="project">
-                <img class="project__thumbnail" src="" alt="project thumbnail" />
-                <div class="card__body">
-                  <h3 class="project__title">{{detail.company}}</h3>
-                  <p><a class="project__author" href="profile.html">{{detail.model}} - {{detail.year}}</a></p>
-                  <p class="project--rating">
-                    <span style="font-weight: bold;">{{detail.description}}</span>
-                  </p>
-                  <div class="project__tags">
-                    {% for variant in detail.variant.all %}
-                    <span class="tag tag--pill tag--main">
-                      <small>{{variant}}</small>
-                    </span>
-                    {%endfor%}
-                    
-                  </div>
-                </div>
-              </a>
+         <div class="grid grid--three">
+            {% for detail in allDetails %}
+            <div class="column">
+               <div class="card_project">
+                  <a href="{% url 'detail' detail.uuid %}" class="project">
+                     {% if detail.image %}
+                     <img class="project__thumbnail" src="{{ detail.image.url }}" alt="project thumbnail" />
+                     {% else %}
+                     <p>No image available</p>
+                     {% endif %}
+                     <div class="card__body">
+                        <h3 class="project__title">{{ detail.company }}</h3>
+                        <p>
+                           <a class="project__author" href="profile.html">{{ detail.model }} - {{ detail.year }}</a>
+                        </p>
+                        <p class="project--rating">
+                           <span style="font-weight: bold;">{{ detail.description }}</span>
+                        </p>
+                        <div class="project__tags">
+                           {% for variant in detail.variant.all %}
+                           <span class="tag tag--pill tag--main">
+                           <small>{{ variant }}</small>
+                           </span>
+                           {% endfor %}
+                        </div>
+                     </div>
+                  </a>
+               </div>
             </div>
-          </div>
-          {%endfor%}  
-        </div>
+            {% endfor %}
+         </div>
       </div>
-    </section>
-
+   </section>
+   
    
   </main>
 

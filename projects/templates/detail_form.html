@@ -1,12 +1,26 @@
 {% extends 'main.html' %}
 
 {%block content%}
-<h1>Detail Form | <button><a href="{% url 'details' %}">Go Back</a></button></h1>
+<!-- Main Section -->
 
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="Submit">
-</form>
+<main class="formPage my-xl">
+    <div class="content-box">
+        <div class="formWrapper">
+            <h2>Form For Detials</h2><a class="backButton" href="{%url 'details'%}">Back</i></a>
+            <br>
+
+            <form class="form" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {%for field in form%}
+                <div class="form__field">
+                    <label for="formInput#text">{{field.label}}</label>
+                    {{field}}
+                </div>
+                {%endfor%}
+                <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
+            </form>
+        </div>
+    </div>
+</main>
 
 {%endblock%}
