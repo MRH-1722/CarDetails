@@ -5,9 +5,6 @@ from .forms import DetailForm
 
 def details(request):
     allDetails = Detail.objects.all()
-    print('hello')
-    # for detail in allDetails:
-    #     print(detail.image.url)
     return render(request , 'details.html' , {'allDetails' : allDetails} )
 
 def detail(request, pk): 
