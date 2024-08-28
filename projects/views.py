@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Detail
 from .forms import DetailForm
+from django.contrib.auth.decorators import login_required
 
 def details(request):
     allDetails = Detail.objects.all()
@@ -12,6 +13,8 @@ def detail(request, pk):
     variant = Detail.objects.all()
     return render(request, 'detail.html' , {'detail' : detailObj , 'variant':variant})
 
+
+@login_required(login_url='login')
 def createDetail(request):
     form = DetailForm(request.POST , request.FILES)
     if request.method == 'POST':
@@ -22,6 +25,7 @@ def createDetail(request):
     context = {'form' : form}
     return render(request, 'detail_form.html' , context)
 
+@login_required(login_url='login')
 def updateDetail(request, pk):
     detail = Detail.objects.get(uuid=pk)
     form = DetailForm(instance=detail)
@@ -33,6 +37,7 @@ def updateDetail(request, pk):
     context = {'form':form}
     return render(request, 'detail_form.html' , context)
 
+@login_required(login_url='login')
 def deleteDetail(request , pk):
     detail = Detail.objects.get(uuid=pk)
     if request.method == 'POST':
