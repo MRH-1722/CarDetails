@@ -1,8 +1,9 @@
-from django.shortcuts import render , redirect
+from django.shortcuts import render , redirect 
 from .models import Profile
 from projects.models import Detail
 from django.contrib.auth.models import User
 from django.contrib.auth import login , authenticate, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import CustomUserCreationForm
 
@@ -67,8 +68,22 @@ def profiles(request):
     return render(request , 'profiles.html' , context)  
 
 def userProfile(request, pk):
+    
     profile = Profile.objects.get(uuid=pk)
     topSkills = profile.skill_set.exclude(description__exact = '')
     otherSkills = profile.skill_set.filter(description = '')
     context = {'profile' : profile, 'topSkills':topSkills, 'otherSkills':otherSkills }
     return render(request , 'user-profile.html', context)
+
+@login_required(login_url='login')
+def userAccount(request):
+    profile = request.user.profile
+    skills = profile.skill_set.all()
+    details = profile.detail_set.all()
+    context = {'profile':profile , 'skills': skills, 'details' : details}
+    return render(request, 'account.html', context)
+
+@login_required(login_url='login')
+def editAccount(request):
+    context = {}
+    return render(request, 'profile-form.html' , context)
