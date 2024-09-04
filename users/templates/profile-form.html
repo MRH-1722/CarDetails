@@ -5,6 +5,7 @@
 <h1>Edit account</h1>
 <form method="POST" action="{%url 'edit-account' %}">
 {%csrf_token%}
+{{form.as_p}}
 <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
 </form>
 
