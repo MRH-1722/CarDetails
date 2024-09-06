@@ -16,33 +16,44 @@ def detail(request, pk):
 
 @login_required(login_url='login')
 def createDetail(request):
-    form = DetailForm(request.POST , request.FILES)
+    profile = request.user.profile
+    form = DetailForm()
+
     if request.method == 'POST':
         form = DetailForm(request.POST , request.FILES)
         if form.is_valid():
-            form.save()
+            detail = form.save(commit=False)
+            detail.owner = profile
+            detail.save()
             return redirect('details')
+        
     context = {'form' : form}
     return render(request, 'detail_form.html' , context)
 
 @login_required(login_url='login')
 def updateDetail(request, pk):
-    detail = Detail.objects.get(uuid=pk)
+    profile = request.user.profile
+    detail = profile.detail_set.get(uuid=pk)
     form = DetailForm(instance=detail)
+
     if request.method == 'POST':
         form = DetailForm(request.POST, request.FILES, instance=detail )
         if form.is_valid():
             form.save()
             return redirect('details')
+        
     context = {'form':form}
     return render(request, 'detail_form.html' , context)
 
 @login_required(login_url='login')
 def deleteDetail(request , pk):
-    detail = Detail.objects.get(uuid=pk)
+    profile = request.user.profile
+    detail = profile.detail_set.get(uuid=pk)
+
     if request.method == 'POST':
         detail.delete()
         return redirect('details')
+    
     context = {'detail' : detail}
     return render(request , 'delete_detail.html' , context)
  

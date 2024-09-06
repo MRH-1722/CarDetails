@@ -25,7 +25,7 @@ class Profile(models.Model):
     def __str__(self):
         return str(self.username)
     
-class Skill(models.Model):
+class Skill(models.Model):  
     owner = models.ForeignKey(Profile , on_delete=models.CASCADE , null=True , blank=True)
     name = models.CharField(max_length=50 , null=True , blank=True)
     description = models.TextField(max_length=200 , null=True , blank=True)
