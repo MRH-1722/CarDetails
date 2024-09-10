@@ -76,7 +76,7 @@
               <a class="tag tag--pill tag--main settings__btn" href="{% url 'update-skill' skill.uuid%}"
                 ><i class="im im-edit"></i> Edit</a
               >
-              <a class="tag tag--pill tag--main settings__btn" href="#"
+              <a class="tag tag--pill tag--main settings__btn" href="{% url 'delete-skill' skill.uuid %}?next=/account"
                 ><i class="im im-x-mark-circle-o"></i> Delete</a
               >
             </td>
@@ -107,7 +107,7 @@
               <a class="tag tag--pill tag--main settings__btn" href="{%url 'update-detail' detail.uuid%}"
                 ><i class="im im-edit"></i> Edit</a
               >
-              <a class="tag tag--pill tag--main settings__btn" href="{%url 'delete-detail' detail.uuid%}"
+              <a class="tag tag--pill tag--main settings__btn" href="{%url 'delete-detail' detail.uuid%}?next=/account"
                 ><i class="im im-x-mark-circle-o"></i> Delete</a
               >
             </td>

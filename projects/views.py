@@ -25,7 +25,7 @@ def createDetail(request):
             detail = form.save(commit=False)
             detail.owner = profile
             detail.save()
-            return redirect('details')
+            return redirect('account')
         
     context = {'form' : form}
     return render(request, 'detail_form.html' , context)
@@ -40,7 +40,7 @@ def updateDetail(request, pk):
         form = DetailForm(request.POST, request.FILES, instance=detail )
         if form.is_valid():
             form.save()
-            return redirect('details')
+            return redirect('account')
         
     context = {'form':form}
     return render(request, 'detail_form.html' , context)
@@ -52,8 +52,8 @@ def deleteDetail(request , pk):
 
     if request.method == 'POST':
         detail.delete()
-        return redirect('details')
+        return redirect('account')
     
-    context = {'detail' : detail}
-    return render(request , 'delete_detail.html' , context)
+    context = {'object' : detail}
+    return render(request , 'delete-form.html' , context)
  
