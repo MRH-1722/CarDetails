@@ -22,15 +22,16 @@
       </div>
 
       <div class="hero-section__search">
-        <form class="form" action="#" method="get">
+        <form class="form" action="{% url 'details'%}" method="get">
           <div class="form__field">
             <label for="formInput#search">Search By Car Details </label>
             <input
               class="input input--text"
               id="formInput#search"
               type="text"
-              name="text"
+              name="search_query"
               placeholder="Search by Company or model"
+              value="{{search_query}}"
             />
           </div>
 

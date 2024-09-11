@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Detail
 from .forms import DetailForm
 from django.contrib.auth.decorators import login_required
+from .models import Detail , Variant
+from .utils import searchProject
 
 def details(request):
-    allDetails = Detail.objects.all()
-    return render(request , 'details.html' , {'allDetails' : allDetails} )
+    allDetails , search_query = searchProject(request)
+    context = {'allDetails' : allDetails , 'search_query' : search_query}
+    return render(request , 'details.html' , context )
 
 def detail(request, pk): 
     detailObj = Detail.objects.get(uuid=pk)
