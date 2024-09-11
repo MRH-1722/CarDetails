@@ -18,6 +18,9 @@ class Detail(models.Model):
     def __str__(self):
         return f"{self.company} - {self.model}"
     
+    class Meta:
+        ordering = ['created']
+    
 class Body_detail(models.Model):
     condition = (
         ('rusted' , 'Rusted'),
