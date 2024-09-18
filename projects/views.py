@@ -21,8 +21,20 @@ def details(request):
     except EmptyPage:
         page = paginator.num_pages
         allDetails = paginator.page(page)
+
+    leftIndex = (int(page) - 4)
+
+    if leftIndex < 1:
+        leftIndex = 1
+
+    rightIndex = (int(page) + 4)
+
+    if rightIndex > paginator.num_pages:
+        rightIndex =  paginator.num_pages
+
+    customRange = range(leftIndex , rightIndex)
         
-    context = {'allDetails' : allDetails , 'search_query' : search_query , 'paginator':paginator}
+    context = {'allDetails' : allDetails , 'search_query' : search_query , 'paginator':paginator , 'customRange' :customRange}
     return render(request , 'details.html' , context )
 
 def detail(request, pk):  

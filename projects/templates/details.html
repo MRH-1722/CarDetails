@@ -94,7 +94,7 @@
       </div>
     </div>
   </section>
-
+  {% if allDetails.has_other_pages %}
   <div class="pagination">
     <ul class="container">
 
@@ -117,6 +117,7 @@
       {%endif%}
     </ul>
   </div>
+  {%endif%}
 </main>
 
 {%endblock content%}
