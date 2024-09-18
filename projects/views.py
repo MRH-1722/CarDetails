@@ -4,13 +4,28 @@ from .forms import DetailForm
 from django.contrib.auth.decorators import login_required
 from .models import Detail , Variant
 from .utils import searchProject
+from django.core.paginator import Paginator , PageNotAnInteger , EmptyPage
 
 def details(request):
     allDetails , search_query = searchProject(request)
-    context = {'allDetails' : allDetails , 'search_query' : search_query}
+
+    page = request.GET.get('page')
+    results = 3
+    paginator  = Paginator(allDetails, results)
+
+    try:
+        allDetails = paginator.page(page)
+    except PageNotAnInteger:
+        page = 1
+        allDetails = paginator.page(page)
+    except EmptyPage:
+        page = paginator.num_pages
+        allDetails = paginator.page(page)
+        
+    context = {'allDetails' : allDetails , 'search_query' : search_query , 'paginator':paginator}
     return render(request , 'details.html' , context )
 
-def detail(request, pk): 
+def detail(request, pk):  
     detailObj = Detail.objects.get(uuid=pk)
     variant = Detail.objects.all()
     return render(request, 'detail.html' , {'detail' : detailObj , 'variant':variant})

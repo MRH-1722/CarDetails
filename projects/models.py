@@ -19,7 +19,7 @@ class Detail(models.Model):
         return f"{self.company} - {self.model}"
     
     class Meta:
-        ordering = ['created']
+        ordering = ['-created']
     
 class Body_detail(models.Model):
     condition = (
