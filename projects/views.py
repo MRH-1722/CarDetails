@@ -1,46 +1,33 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .forms import DetailForm
+from .forms import DetailForm, ReviewForm
 from django.contrib.auth.decorators import login_required
 from .models import Detail , Variant
-from .utils import searchProject
-from django.core.paginator import Paginator , PageNotAnInteger , EmptyPage
+from .utils import searchProject , paginateDetails
+
 
 def details(request):
     allDetails , search_query = searchProject(request)
+    customRange , allDetails = paginateDetails(request , allDetails, 6)
 
-    page = request.GET.get('page')
-    results = 3
-    paginator  = Paginator(allDetails, results)
-
-    try:
-        allDetails = paginator.page(page)
-    except PageNotAnInteger:
-        page = 1
-        allDetails = paginator.page(page)
-    except EmptyPage:
-        page = paginator.num_pages
-        allDetails = paginator.page(page)
-
-    leftIndex = (int(page) - 4)
-
-    if leftIndex < 1:
-        leftIndex = 1
-
-    rightIndex = (int(page) + 4)
-
-    if rightIndex > paginator.num_pages:
-        rightIndex =  paginator.num_pages
-
-    customRange = range(leftIndex , rightIndex)
+    
         
-    context = {'allDetails' : allDetails , 'search_query' : search_query , 'paginator':paginator , 'customRange' :customRange}
+    context = {'allDetails' : allDetails , 'search_query' : search_query ,  'customRange' :customRange}
     return render(request , 'details.html' , context )
 
 def detail(request, pk):  
     detailObj = Detail.objects.get(uuid=pk)
     variant = Detail.objects.all()
-    return render(request, 'detail.html' , {'detail' : detailObj , 'variant':variant})
+    form = ReviewForm()
+
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        review = form.save(commit=False)
+        review.detail = detailObj
+        review.owner = request.user.profile
+        review.save()
+        
+    return render(request, 'detail.html' , {'detail' : detailObj , 'variant':variant , 'form' : form})
 
 
 @login_required(login_url='login')

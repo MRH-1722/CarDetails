@@ -20,23 +20,21 @@ class Detail(models.Model):
     
     class Meta:
         ordering = ['-created']
-    
-class Body_detail(models.Model):
-    condition = (
-        ('rusted' , 'Rusted'),
-        ('painted' , 'Total Paint'),
-        ('shower' , 'Sides shower'),
-        ('Total' , 'Total Geniun'),
-    )
-    detail = models.ForeignKey(Detail, on_delete=models.CASCADE, null=True)
-    body_color = models.CharField(max_length=20)
-    body_condition = models.CharField(max_length=50 , choices=condition)
+
+class Review(models.Model):
+    owner = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
+    detail = models.ForeignKey(Detail, on_delete=models.CASCADE)
+    body = models.TextField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
-    uuid = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+    id = models.UUIDField(default=uuid.uuid4, unique=True,
+                          primary_key=True, editable=False)
+
+    class Meta:
+        unique_together = [['owner', 'detail']]
 
     def __str__(self):
-        return self.body_color
-    
+        return self.body[:15]
+   
 class Variant(models.Model):
     variants = (
         ('simple' , 'Simple Oriel'),
@@ -58,3 +56,4 @@ class Variant(models.Model):
 
     def __str__(self):
         return self.car_variant
+    
